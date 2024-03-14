@@ -7,10 +7,10 @@ function App() {
 
 
   return (
- <div>
-  <h1>Dulanjali</h1>
-<Login/>
- </div>
+    <>
+
+      <Login />
+    </>
   )
 }
 

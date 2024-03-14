@@ -14,7 +14,7 @@ export default function MyButton({name,width,onClick, background,hoverColor}) {
   }));
   return (
     <Box>
-        <ColorButton variant='contained'  sx={{width:{width}}} onClick={onClick}>{name}</ColorButton>
+        <ColorButton variant='contained'  sx={{width:{width,marginBottom:"10px"}}} onClick={onClick}>{name}</ColorButton>
     </Box>
     
   )
