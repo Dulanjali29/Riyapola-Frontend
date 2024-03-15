@@ -1,12 +1,36 @@
 
 import { Box, Typography } from '@mui/material'
 
-import React from 'react'
+import React, { useState } from 'react'
 import InputText from '../../common/InputText/InputText'
 import login from '../../assets/img/login3.jpg'
 import MyButton from '../../common/Button/MyButton'
 import SecondFooter from '../../common/SecondFooter/SecondFooter'
+import Alert from '../../common/Alert/Alert'
+import instance
+ from '../../service/AxiosOrder'
 export default function Login() {
+
+  const [username,setUserName]=useState("dulanji@gmail.com");
+  const [password,setPassword]=useState("Dulanji@123");
+
+  const adminLogin=()=>{
+    instance.post('adminLogin/login', {
+      username: username,
+      password: password
+    })
+      .then(function (response) {
+        console.log(response.data.token);
+        localStorage.setItem('stmToken', response.data.token);
+        window.location.reload();
+        Alert('success', 'Success Registration', 'User Login Successful!')
+      })
+      .catch(function (error) {
+        console.log(error);
+
+      });
+
+  }
   return (
     <Box>
       <Box sx={{display:"flex",justifyContent:"center"}}>
@@ -17,12 +41,12 @@ export default function Login() {
             </Typography>
           </Box>
           <Box>
-            <InputText label={"User Name"} value={'user Name'} width={"100%"} />
-            <InputText label={"User Name"} value={'Password'} width={"100%"} />
+            <InputText label={"User Name"} value={'user Name'} width={"100%"}  onChange={(val)=>setUserName(val.target.value)}/>
+            <InputText label={"Password"} value={'Password'} width={"100%"}onChange={(val)=>setPassword(val.target.value)} />
 
           </Box>
           <Box sx={{opacity:"100%"}}>
-            <MyButton name={"Login"} width={'100%'} background={"#000080"} hoverColor={"#008080"} />
+            <MyButton name={"Login"} width={'100%'} background={"#000080"} hoverColor={"#008080"} onClick={adminLogin} />
           </Box>
         </Box>
       </Box>

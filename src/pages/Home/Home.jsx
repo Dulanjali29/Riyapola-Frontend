@@ -5,6 +5,7 @@ import login2 from '../../assets/img/login2.jpg'
 import MyButton from '../../common/Button/MyButton'
 import SecondFooter from '../../common/SecondFooter/SecondFooter'
 import Footer from '../../common/Footer/Footer'
+import { Link } from 'react-router-dom'
 export default function Home() {
     return (
         <Box >
@@ -19,7 +20,10 @@ export default function Home() {
             
                 <Box>
                 <Box  sx={{marginTop:"620px", marginLeft:"70px", width:"30%",opacity:"100%", position:"absolute",zIndex:"100px"}}>
-                <MyButton name={"Admin Login"} width={'50%'} background={"#000000"} hoverColor={"#808080"}/>
+                    <Link to={'/login'}>
+                    <MyButton name={"Admin Login"} width={'50%'} background={"#000000"} hoverColor={"#808080"}/>
+                    </Link>
+               
                 </Box>
                 </Box>
             <Box>
