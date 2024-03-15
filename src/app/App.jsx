@@ -1,21 +1,44 @@
 
 
+import DrawerNav from '../component/DrawerNav/DrawerNav'
 import Home from '../pages/Home/Home'
 import Login from '../pages/Login/Login'
 import './App.css'
-import {Routes,Route,Link,Navigate} from 'react-router-dom'
+import { Routes, Route, Link, Navigate } from 'react-router-dom'
+import { useState,useEffect } from 'react'
+import { Box } from '@mui/material'
 
 function App() {
 
+  const [login, setLogin] = useState(false);
+
+  useEffect(() => {
+    const key = localStorage.getItem('stmToken')
+    console.log(key);
+
+    if (key !== null) {
+      setLogin(true);
+    } else {
+      setLogin(false);
+    }
+  }, []);
   return (
     <>
-        
-          <Routes>
-            <Route path='*' element={<Navigate to={'/home'} />} />
-            <Route path={'/home'} element={<Home />} />
-            <Route path={'/login'} element={<Login />} />
-          </Routes>
-      
+      {
+        login ?
+          <DrawerNav />
+          :
+          <Box>
+            <Routes>
+              <Route path='*' element={<Navigate to={'/login'} />} />
+              <Route path={'/home'} element={<Home />} />
+              <Route path={'/login'} element={<Login />} />
+            </Routes>
+          </Box>
+
+
+      }
+
     </>
   )
 }

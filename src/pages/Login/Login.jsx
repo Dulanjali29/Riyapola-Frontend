@@ -7,23 +7,24 @@ import login from '../../assets/img/login3.jpg'
 import MyButton from '../../common/Button/MyButton'
 import SecondFooter from '../../common/SecondFooter/SecondFooter'
 import Alert from '../../common/Alert/Alert'
-import instance
- from '../../service/AxiosOrder'
+import instance from '../../service/AxiosOrder'
+
 export default function Login() {
 
-  const [username,setUserName]=useState("dulanji@gmail.com");
-  const [password,setPassword]=useState("Dulanji@123");
+  const [username,setUserName]=useState();
+  const [password,setPassword]=useState();
 
   const adminLogin=()=>{
-    instance.post('adminLogin/login', {
+    instance.post('/login', {
       username: username,
       password: password
     })
       .then(function (response) {
         console.log(response.data.token);
         localStorage.setItem('stmToken', response.data.token);
-        window.location.reload();
-        Alert('success', 'Success Registration', 'User Login Successful!')
+        console.log(response.data.token);
+        // window.location.reload();
+        // Alert('success', 'Success Registration', 'User Login Successful!')
       })
       .catch(function (error) {
         console.log(error);
@@ -41,8 +42,8 @@ export default function Login() {
             </Typography>
           </Box>
           <Box>
-            <InputText label={"User Name"} value={'user Name'} width={"100%"}  onChange={(val)=>setUserName(val.target.value)}/>
-            <InputText label={"Password"} value={'Password'} width={"100%"}onChange={(val)=>setPassword(val.target.value)} />
+            <InputText label={"User Name"} value={username} width={"100%"} type={'text'} onChange={(val)=>setUserName(val.target.value)}/>
+            <InputText label={"Password"} value={password} width={"100%"}type={'password'} onChange={(val)=>setPassword(val.target.value)} />
 
           </Box>
           <Box sx={{opacity:"100%"}}>
