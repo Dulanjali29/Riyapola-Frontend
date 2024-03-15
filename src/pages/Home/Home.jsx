@@ -3,6 +3,7 @@ import React from 'react'
 import { Box, Typography } from '@mui/material'
 import login2 from '../../assets/img/login2.jpg'
 import MyButton from '../../common/Button/MyButton'
+import Footer from '../../common/SecondFooter/SecondFooter'
 export default function Home() {
     return (
         <Box >
@@ -23,7 +24,7 @@ export default function Home() {
             <Box>
                 <img style={{ width: "100%" ,height:"900px"}} src={login2} alt='' />
             </Box>
-            
+            <Footer/>
         </Box>
     )
 }
