@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 import { DataGrid } from '@mui/x-data-grid';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 import InputText from '../../common/InputText/InputText'
 import MyButton from '../../common/Button/MyButton'
@@ -13,46 +16,52 @@ export default function AdminAction() {
     const [lastName, setLastName] = useState("")
     const [userName, setUserName] = useState("")
     const [password, setpassword] = useState("")
+    const [role, setRole] = useState("")
 
     const columns = [
-      
+
         { field: 'firstName', headerName: 'First Name', width: 200 },
-        { field: 'lastName', headerName: 'Last Name',  width: 200 },
-        { field: 'userName', headerName: 'UserName', width: 200 },
+        { field: 'lastName', headerName: 'Last Name', width: 200 },
+        { field: 'userName', headerName: 'User Name', width: 200 },
         { field: 'role', headerName: 'Role', width: 200 },
         {
-          field: 'action',
-          headerName: 'Action',
-          width: 200,
-          renderCell: (params) => (
-            <Box>
-    
-            
-              <IconButton
-                color='success'
-                aria-label="edit"
-                onClick={() => { openPopup(params.row) }}
-              >
-                <EditIcon />
-              </IconButton>
-              <IconButton
-                color='error'
-                aria-label="delete"
-                onClick={() => deleteStudent(params.row.id)}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Box>
-          ),
+            field: 'action',
+            headerName: 'Action',
+            width: 200,
+            //   renderCell: (params) => (
+            //     <Box>
+
+
+            //       <IconButton
+            //         color='success'
+            //         aria-label="edit"
+            //         onClick={() => { openPopup(params.row) }}
+            //       >
+            //         <EditIcon />
+            //       </IconButton>
+            //       <IconButton
+            //         color='error'
+            //         aria-label="delete"
+            //         onClick={() => deleteStudent(params.row.id)}
+            //       >
+            //         <DeleteIcon />
+            //       </IconButton>
+            //     </Box>
+            //   ),
         },
-      ];
+    ];
 
     const save = () => {
 
     }
     const clear = () => {
-
+            setFirstName(""),
+            setLastName(""),
+            setUserName(""),
+            setpassword(""),
+            setRole("");
     }
+
     return (
         <Box>
             <Box>
@@ -86,7 +95,7 @@ export default function AdminAction() {
                             <Autocomplete
                                 disablePortal
                                 id="combo-box-demo"
-                                options={[{label:"Admin"},{label:"Customer"}]}
+                                options={[{ label: "Admin" }, { label: "Customer" }]}
                                 sx={{ width: 300 }}
                                 renderInput={(params) => <TextField {...params} label="Role" />}
                             />
@@ -105,21 +114,21 @@ export default function AdminAction() {
                 </Box>
             </Box>
             <Box>
-            <div style={{ height: 400, width: '80%', paddingTop: 30 }}>
-        <DataGrid
-          rows={data}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[5, 10]}
-          checkboxSelection
-        />
+                <div style={{ height: 400, width: '80%', paddingTop: 30 }}>
+                    <DataGrid
+                        rows={data}
+                        columns={columns}
+                        initialState={{
+                            pagination: {
+                                paginationModel: { page: 0, pageSize: 10 },
+                            },
+                        }}
+                        pageSizeOptions={[5, 10]}
+                        checkboxSelection
+                    />
 
-      
-      </div>
+
+                </div>
             </Box>
         </Box>
     )
