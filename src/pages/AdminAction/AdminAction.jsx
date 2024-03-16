@@ -15,7 +15,36 @@ export default function AdminAction() {
     const [password, setpassword] = useState("")
 
     const columns = [
-        
+      
+        { field: 'firstName', headerName: 'First Name', width: 200 },
+        { field: 'lastName', headerName: 'Last Name',  width: 200 },
+        { field: 'userName', headerName: 'UserName', width: 200 },
+        { field: 'role', headerName: 'Role', width: 200 },
+        {
+          field: 'action',
+          headerName: 'Action',
+          width: 200,
+          renderCell: (params) => (
+            <Box>
+    
+            
+              <IconButton
+                color='success'
+                aria-label="edit"
+                onClick={() => { openPopup(params.row) }}
+              >
+                <EditIcon />
+              </IconButton>
+              <IconButton
+                color='error'
+                aria-label="delete"
+                onClick={() => deleteStudent(params.row.id)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Box>
+          ),
+        },
       ];
 
     const save = () => {
