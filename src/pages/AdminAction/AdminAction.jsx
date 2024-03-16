@@ -44,7 +44,7 @@ export default function AdminAction() {
                     <IconButton
                         color='error'
                         aria-label="delete"
-                        onClick={() => deleteStudent(params.row.id)}
+                        onClick={() => deleteAdmin(params.row.id)}
                     >
                         <DeleteIcon />
                     </IconButton>
@@ -72,8 +72,18 @@ export default function AdminAction() {
 
             });
     }
-    const deleteAdmin=()=>{
-       
+    const deleteAdmin=(id)=>{
+        instance.delete('/deleteAdmin/' + id)
+
+        .then(response => {
+          console.log(response)
+          getAlldmin()
+  
+        })
+        .catch(error => {
+          console.error(error);
+         
+        });
     }
     const clear = () => {
         setFirstName(""),
