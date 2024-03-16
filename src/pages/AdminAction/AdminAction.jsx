@@ -1,11 +1,12 @@
 import { Box, Grid } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 import { DataGrid } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import instance from '../../service/AxiosOrder';
 
 import InputText from '../../common/InputText/InputText'
 import MyButton from '../../common/Button/MyButton'
@@ -19,35 +20,35 @@ export default function AdminAction() {
     const [role, setRole] = useState("")
 
     const columns = [
-
-        { field: 'firstName', headerName: 'First Name', width: 200 },
-        { field: 'lastName', headerName: 'Last Name', width: 200 },
-        { field: 'userName', headerName: 'User Name', width: 200 },
+        { field: 'id', headerName: 'ID', width: 100 },
+        { field: 'firstname', headerName: 'First Name', width: 200 },
+        { field: 'lastname', headerName: 'Last Name', width: 200 },
+        { field: 'username', headerName: 'User Name', width: 200 },
         { field: 'role', headerName: 'Role', width: 200 },
         {
             field: 'action',
             headerName: 'Action',
             width: 200,
-            //   renderCell: (params) => (
-            //     <Box>
+              renderCell: (params) => (
+                <Box>
 
 
-            //       <IconButton
-            //         color='success'
-            //         aria-label="edit"
-            //         onClick={() => { openPopup(params.row) }}
-            //       >
-            //         <EditIcon />
-            //       </IconButton>
-            //       <IconButton
-            //         color='error'
-            //         aria-label="delete"
-            //         onClick={() => deleteStudent(params.row.id)}
-            //       >
-            //         <DeleteIcon />
-            //       </IconButton>
-            //     </Box>
-            //   ),
+                  <IconButton
+                    color='success'
+                    aria-label="edit"
+                    onClick={() => { openPopup(params.row) }}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    color='error'
+                    aria-label="delete"
+                    onClick={() => deleteStudent(params.row.id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Box>
+              ),
         },
     ];
 
@@ -61,7 +62,34 @@ export default function AdminAction() {
             setpassword(""),
             setRole("");
     }
-
+const getAlldmin=()=>{
+    instance({
+        method: 'get',
+        url: '/getAllAdmin',
+      })
+        .then(function (response) {
+  
+          const array = [];
+          response.data.forEach(val => {
+            array.push({
+                id:val.admin_id,
+              firstname: val.firstName,
+              lastname: val.lastName,
+              username: val.userName,
+              password: val.password,
+              role:val.role,
+  
+            });
+  
+          });
+  
+          setData(array);
+  
+        });   
+}
+useEffect(() => {
+    getAlldmin(setData)
+  }, []);
     return (
         <Box>
             <Box>
