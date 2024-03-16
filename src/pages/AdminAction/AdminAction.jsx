@@ -2,17 +2,21 @@ import { Box, Grid } from '@mui/material'
 import React, { useState } from 'react'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
+import { DataGrid } from '@mui/x-data-grid';
 
 import InputText from '../../common/InputText/InputText'
 import MyButton from '../../common/Button/MyButton'
 
 export default function AdminAction() {
-
+    const [data, setData] = useState([])
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [userName, setUserName] = useState("")
     const [password, setpassword] = useState("")
 
+    const columns = [
+        
+      ];
 
     const save = () => {
 
@@ -48,7 +52,7 @@ export default function AdminAction() {
                         </Box>
 
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={1}>
                         <Box>
                             <Autocomplete
                                 disablePortal
@@ -70,6 +74,23 @@ export default function AdminAction() {
                 <Box sx={{}}>
                     <MyButton name={"Clear"} width={'200px'} background={"#000080"} hoverColor={"#008080"} onClick={clear} />
                 </Box>
+            </Box>
+            <Box>
+            <div style={{ height: 400, width: '80%', paddingTop: 30 }}>
+        <DataGrid
+          rows={data}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[5, 10]}
+          checkboxSelection
+        />
+
+      
+      </div>
             </Box>
         </Box>
     )
