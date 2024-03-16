@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Grid,Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import instance from '../../service/AxiosOrder';
+
 
 import InputText from '../../common/InputText/InputText'
 import MyButton from '../../common/Button/MyButton'
@@ -63,13 +64,16 @@ export default function AdminAction() {
         })
             .then(function (response) {
                 console.log(response);
-                clearFields()
+                clear()
                 getAlldmin();
             })
             .catch(function (error) {
                 console.log(error);
 
             });
+    }
+    const deleteAdmin=()=>{
+       
     }
     const clear = () => {
         setFirstName(""),
@@ -134,9 +138,9 @@ export default function AdminAction() {
                         </Box>
 
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item xs={3}>
                         <Box>
-                        <InputText label={"Role"} value={role} width={"100%"} type={'text'} onChange={(val) => setRole(val.target.value)} />    
+                            <InputText label={"Role"} value={role} width={"100%"} type={'text'} onChange={(val) => setRole(val.target.value)} />
                         </Box>
 
                     </Grid>
@@ -152,7 +156,15 @@ export default function AdminAction() {
                 </Box>
             </Box>
             <Box>
-                <div style={{ height: 400, width: '80%', paddingTop: 30 }}>
+                <Typography
+                    sx={{ flex: '1 1 100%', color: '#000080',marginTop:"20px" }}
+                    variant="h5"
+                    id="tableTitle"
+                    component="div"
+                >
+                    Admin Details
+                </Typography>
+                <div style={{ height: 400, width: '100%', paddingTop: 30 }}>
                     <DataGrid
                         rows={data}
                         columns={columns}
