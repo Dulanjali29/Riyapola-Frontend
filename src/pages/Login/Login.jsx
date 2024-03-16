@@ -11,11 +11,11 @@ import instance from '../../service/AxiosOrder'
 
 export default function Login() {
 
-  const [username,setUserName]=useState();
-  const [password,setPassword]=useState();
+  const [username,setUserName]=useState("Dulanji");
+  const [password,setPassword]=useState("Dulanji@123");
 
   const adminLogin=()=>{
-    instance.post('/login', {
+    instance.post('/adminLogin/login', {
       username: username,
       password: password
     })
@@ -23,7 +23,8 @@ export default function Login() {
         console.log(response.data.token);
         localStorage.setItem('stmToken', response.data.token);
         console.log(response.data.token);
-        // window.location.reload();
+        window.location.reload();
+      
         // Alert('success', 'Success Registration', 'User Login Successful!')
       })
       .catch(function (error) {

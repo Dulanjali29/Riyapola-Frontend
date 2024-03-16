@@ -23,6 +23,7 @@ import { Button } from '@mui/material';
 import routes from '../../Navigation/routes';
 
 
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -151,10 +152,9 @@ export default function DrawerNav() {
                                             px: 2.5,
                                         }}
                                     >
-                                        <ListItemIcon
-
-                                        >
-                                            {<InboxIcon />}
+                                        <ListItemIcon >
+                                            {val.icon}
+                                            {/* {<InboxIcon />} */}
 
                                         </ListItemIcon>
                                         <ListItemText primary={val.name} sx={{ opacity: open ? 1 : 0 }} />
