@@ -27,7 +27,7 @@ export default function Login() {
         console.log(response.data.token);
         window.location.reload();
       
-        // Alert('success', 'Success Registration', 'User Login Successful!')
+        
       })
       .catch(function (error) {
         console.log(error);

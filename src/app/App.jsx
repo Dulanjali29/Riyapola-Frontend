@@ -4,7 +4,7 @@ import DrawerNav from '../component/DrawerNav/DrawerNav'
 import Home from '../pages/Home/Home'
 import Login from '../pages/Login/Login'
 import './App.css'
-import { Routes, Route, Link, Navigate } from 'react-router-dom'
+import { Routes, Route,  Navigate } from 'react-router-dom'
 import { useState,useEffect } from 'react'
 
 
@@ -22,6 +22,7 @@ function App() {
       setLogin(false);
     }
   }, []);
+
   return (
     <>
       {

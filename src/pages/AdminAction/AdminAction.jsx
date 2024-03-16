@@ -1,5 +1,5 @@
 import { Box, Grid } from '@mui/material'
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 import { DataGrid } from '@mui/x-data-grid';
@@ -29,67 +29,83 @@ export default function AdminAction() {
             field: 'action',
             headerName: 'Action',
             width: 200,
-              renderCell: (params) => (
+            renderCell: (params) => (
                 <Box>
 
 
-                  <IconButton
-                    color='success'
-                    aria-label="edit"
-                    onClick={() => { openPopup(params.row) }}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    color='error'
-                    aria-label="delete"
-                    onClick={() => deleteStudent(params.row.id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                    <IconButton
+                        color='success'
+                        aria-label="edit"
+                        onClick={() => { openPopup(params.row) }}
+                    >
+                        <EditIcon />
+                    </IconButton>
+                    <IconButton
+                        color='error'
+                        aria-label="delete"
+                        onClick={() => deleteStudent(params.row.id)}
+                    >
+                        <DeleteIcon />
+                    </IconButton>
                 </Box>
-              ),
+            ),
         },
     ];
 
     const save = () => {
+        instance.post('/saveAdmin', {
 
+            firstName: firstName,
+            lastName: lastName,
+            userName: userName,
+            password: password,
+            role: role
+        })
+            .then(function (response) {
+                console.log(response);
+                clearFields()
+                getAlldmin();
+            })
+            .catch(function (error) {
+                console.log(error);
+
+            });
     }
     const clear = () => {
-            setFirstName(""),
+        setFirstName(""),
             setLastName(""),
             setUserName(""),
             setpassword(""),
             setRole("");
     }
-const getAlldmin=()=>{
-    instance({
-        method: 'get',
-        url: '/getAllAdmin',
-      })
-        .then(function (response) {
-  
-          const array = [];
-          response.data.forEach(val => {
-            array.push({
-                id:val.admin_id,
-              firstname: val.firstName,
-              lastname: val.lastName,
-              username: val.userName,
-              password: val.password,
-              role:val.role,
-  
+    const getAlldmin = () => {
+        instance({
+            method: 'get',
+            url: '/getAllAdmin',
+        })
+            .then(function (response) {
+
+                const array = [];
+                response.data.forEach(val => {
+                    array.push({
+                        id: val.admin_id,
+                        firstname: val.firstName,
+                        lastname: val.lastName,
+                        username: val.userName,
+                        password: val.password,
+                        role: val.role,
+
+                    });
+
+                });
+
+                setData(array);
+
             });
-  
-          });
-  
-          setData(array);
-  
-        });   
-}
-useEffect(() => {
-    getAlldmin(setData)
-  }, []);
+    }
+    useEffect(() => {
+        getAlldmin(setData)
+    }, []);
     return (
         <Box>
             <Box>
@@ -120,13 +136,7 @@ useEffect(() => {
                     </Grid>
                     <Grid item xs={1}>
                         <Box>
-                            <Autocomplete
-                                disablePortal
-                                id="combo-box-demo"
-                                options={[{ label: "Admin" }, { label: "Customer" }]}
-                                sx={{ width: 300 }}
-                                renderInput={(params) => <TextField {...params} label="Role" />}
-                            />
+                        <InputText label={"Role"} value={role} width={"100%"} type={'text'} onChange={(val) => setRole(val.target.value)} />    
                         </Box>
 
                     </Grid>
