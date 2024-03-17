@@ -6,6 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import InputText from '../../common/InputText/InputText';
 import IconButton from '@mui/material/IconButton';
 import MyButton from '../../common/Button/MyButton';
+import instance from '../../service/AxiosOrder';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -17,10 +18,28 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
     const [lastName, setLastName] = useState(updateData?.lastname)
     const [userName, setUserName] = useState(updateData?.username)
     const [password, setPassword] = useState(updateData?.password)
-    const [role, setRole] = useState(updateData?.role)
+   
 
     const save = () => {
-      
+        instance.put('/updateAdmin/' + updateData.id, {
+            firstName: firstName,
+            lastName: lastName,
+            userName: userName,
+            password: password,
+            role:"Admin",
+           
+        })
+            .then(function (response) {
+                console.log(response);
+                updateAdmin()
+              
+                clear()
+
+            })
+            .catch(function (error) {
+                console.log(error);
+              
+            }); 
 
     }
 
@@ -29,7 +48,7 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
         setLastName("");
         setUserName("");
         setPassword("");
-        setRole("");
+      
     }
 
     return (
@@ -77,16 +96,11 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
                             </Grid>
                             <Grid item xs={4}>
                                 <Box>
-                                    <InputText label={"Password"} value={password} width={"100%"} type={'password'} onChange={(val) => setpassword(val.target.value)} />
+                                    <InputText label={"Password"} value={password} width={"100%"} type={'password'} onChange={(val) => setPassword(val.target.value)} />
                                 </Box>
 
                             </Grid>
-                            <Grid item xs={4}>
-                                <Box>
-                                    <InputText label={"Role"} value={role} width={"100%"} type={'text'} onChange={(val) => setRole(val.target.value)} />
-                                </Box>
-
-                            </Grid>
+                           
 
                         </Grid>
                     </Box>
@@ -98,9 +112,7 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
                         <Box sx={{}}>
                             <MyButton name={"Clear"} width={'150px'} background={"#CA6F1E "} hoverColor={"#008080"} onClick={clear} />
                         </Box>
-                        {/* <Box sx={{}}>
-                            <MyButton name={"Close"} width={'150px'} background={"#000080"} hoverColor={"#008080"} onClick={close} />
-                        </Box> */}
+                        
                     </Box>
 
                 </Box>
