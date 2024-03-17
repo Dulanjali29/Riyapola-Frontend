@@ -12,19 +12,24 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function DialogCard({ open, close, updateAdmin, updateData }) {
-    const [data, setData] = useState([])
-    const [firstName, setFirstName] = useState("")
-    const [lastName, setLastName] = useState("")
-    const [userName, setUserName] = useState("")
-    const [password, setpassword] = useState("")
-    const [role, setRole] = useState("")
+
+    const [firstName, setFirstName] = useState(updateData?.firstname)
+    const [lastName, setLastName] = useState(updateData?.lastname)
+    const [userName, setUserName] = useState(updateData?.username)
+    const [password, setPassword] = useState(updateData?.password)
+    const [role, setRole] = useState(updateData?.role)
 
     const save = () => {
+      
 
     }
 
     const clear = () => {
-
+        setFirstName("");
+        setLastName("");
+        setUserName("");
+        setPassword("");
+        setRole("");
     }
 
     return (
@@ -36,7 +41,7 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
         >
 
             <Card sx={{ minwidth: "1000px", maxWidth: "1400", height: "400px", padding: 5 }}>
-                <Box sx={{marginTop:"-40px", marginLeft:"520px", cursor:"pointer"}}>
+                <Box sx={{ marginTop: "-40px", marginLeft: "520px", cursor: "pointer" }}>
                     <IconButton
                         color='error'
                         aria-label="close"
@@ -45,7 +50,7 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
                         <CloseIcon />
                     </IconButton>
                 </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'center', color: '#4169E1',marginTop:"-10px" ,marginBottom:"10px"}}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', color: '#4169E1', marginTop: "-10px", marginBottom: "10px" }}>
                     <h1 >Update Admin Information</h1>
                 </Box >
                 <Box >
