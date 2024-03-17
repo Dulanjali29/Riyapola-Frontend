@@ -1,4 +1,4 @@
-import { Box, Grid,Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
@@ -11,6 +11,7 @@ import instance from '../../service/AxiosOrder';
 
 import InputText from '../../common/InputText/InputText'
 import MyButton from '../../common/Button/MyButton'
+import DialogCard from '../../component/DialogCard/DialogCard';
 
 export default function AdminAction() {
     const [data, setData] = useState([])
@@ -20,6 +21,20 @@ export default function AdminAction() {
     const [password, setpassword] = useState("")
     const [role, setRole] = useState("")
 
+    const [popup,setPopup]=useState(false)
+    const[updateData,setUpdateData]=useState()
+
+    const updateAdmin=()=>{
+        getAlldmin()
+        closePopup()
+    }
+    const openPopup=(val)=>{
+        setPopup(true)
+        setUpdateData(val)
+    }
+    const closePopup=()=>{
+        setPopup(false)
+    }
     const columns = [
         { field: 'id', headerName: 'ID', width: 100 },
         { field: 'firstname', headerName: 'First Name', width: 200 },
@@ -72,18 +87,18 @@ export default function AdminAction() {
 
             });
     }
-    const deleteAdmin=(id)=>{
+    const deleteAdmin = (id) => {
         instance.delete('/deleteAdmin/' + id)
 
-        .then(response => {
-          console.log(response)
-          getAlldmin()
-  
-        })
-        .catch(error => {
-          console.error(error);
-         
-        });
+            .then(response => {
+                console.log(response)
+                getAlldmin()
+
+            })
+            .catch(error => {
+                console.error(error);
+
+            });
     }
     const clear = () => {
         setFirstName(""),
@@ -167,7 +182,7 @@ export default function AdminAction() {
             </Box>
             <Box>
                 <Typography
-                    sx={{ flex: '1 1 100%', color: '#000080',marginTop:"20px" }}
+                    sx={{ flex: '1 1 100%', color: '#000080', marginTop: "20px" }}
                     variant="h5"
                     id="tableTitle"
                     component="div"
@@ -187,7 +202,9 @@ export default function AdminAction() {
                         checkboxSelection
                     />
 
-
+                    {popup &&
+                        <DialogCard open={popup} close={closePopup} updateData={updateData}  updateAdmin={()=>{updateAdmin}}/>
+                    }
                 </div>
             </Box>
         </Box>
