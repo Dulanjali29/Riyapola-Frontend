@@ -1,7 +1,11 @@
 import AdminAction from "../pages/AdminAction/AdminAction"
 import CarView from "../pages/CarView/CarView"
+import Customers from "../pages/Customers/Customers";
+
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
+import PersonIcon from '@mui/icons-material/Person';
+
 
 const routes=[
     {
@@ -17,6 +21,14 @@ const routes=[
         path:'/carview',
         component:<CarView/>,
         icon:<TimeToLeaveIcon/>
+       
+    },
+    {
+        name:"Customers",
+        key:'customerview',
+        path:'/customerview',
+        component:<Customers/>,
+        icon:<PersonIcon/>
        
     },
   

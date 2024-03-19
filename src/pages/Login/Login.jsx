@@ -6,7 +6,7 @@ import InputText from '../../common/InputText/InputText'
 import login from '../../assets/img/login3.jpg'
 import MyButton from '../../common/Button/MyButton'
 import SecondFooter from '../../common/SecondFooter/SecondFooter'
-import Alert from '../../common/Alert/Alert'
+
 import instance from '../../service/AxiosOrder'
 
 export default function Login() {
@@ -21,13 +21,14 @@ export default function Login() {
     })
       .then(function (response) {
         console.log(response.data.token);
-        console.log(username,password);
-        
+       
         localStorage.setItem('stmToken', response.data.token);
         console.log(response.data.token);
-        window.location.reload();
-      
+        console.log(localStorage.getItem('stmToken'));
         
+        window.location.reload();
+
+      
       })
       .catch(function (error) {
         console.log(error);
