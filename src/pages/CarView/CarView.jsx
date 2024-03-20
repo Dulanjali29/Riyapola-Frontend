@@ -58,13 +58,7 @@ export default function CarView() {
 
   }
   const clear = () => {
-    setBrand("");
-    setModel("");
-    setNoOfPassangers("");
-    setFuelType("");
-    setTransmissionMode("");
-    setDailyRentalPrice("");
-    setStatus("");
+    
   }
 
   return (
@@ -172,7 +166,7 @@ export default function CarView() {
         </Box>
       </Box>
 
-      
+
     </Box>
   )
 }
