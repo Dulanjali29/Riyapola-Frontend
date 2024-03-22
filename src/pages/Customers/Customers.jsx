@@ -3,6 +3,8 @@ import { Box ,Typography} from '@mui/material'
 import {useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import instance from '../../service/AxiosOrder';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function Customers() {
     const [data, setData] = useState([])
@@ -16,39 +18,57 @@ export default function Customers() {
         { field: 'contact', headerName: 'Contact', width: 200 },
         { field: 'email', headerName: 'E-Mail', width: 200 },
         { field: 'dateTime', headerName: 'Date and Time', width: 200 },
+        {
+            field: 'action',
+            headerName: 'Action',
+            width: 200,
+            renderCell: (params) => (
+                <Box>
+
+                    <IconButton
+                        color='error'
+                        aria-label="delete"
+                        onClick={() => deleteAdmin(params.row.id)}
+                    >
+                        <DeleteIcon />
+                    </IconButton>
+                </Box>
+            ),
+        },
     ];
-    // useEffect(() => {
-    //     getAllCustomers(setData)
-    // }, []);
 
-    // const getAllCustomers = () => {
-    //     instance({
-    //         method: 'get',
-    //         url: '/getAllCustomers',
-    //     })
-    //         .then(function (response) {
+    useEffect(() => {
+        getAllCustomers(setData)
+    }, []);
 
-    //             const array = [];
-    //             response.data.forEach(val => {
-    //                 array.push({
-    //                     id: val.admin_id,
-    //                     firstname: val.firstName,
-    //                     lastname: val.lastName,
-    //                     nic: val.nic,
-    //                     address: val.address,
-    //                     contact: val.contact,
-    //                     email: val.email,
-    //                     dateTime: val.dateTime
+    const getAllCustomers = () => {
+        instance({
+            method: 'get',
+            url: '/getAllCustomers',
+        })
+            .then(function (response) {
+
+                const array = [];
+                response.data.forEach(val => {
+                    array.push({
+                        id:val.customer_id,
+                        firstname: val.firstName,
+                        lastname: val.lastName,
+                        nic: val.nic,
+                        address: val.address,
+                        contact: val.contact,
+                        email: val.email,
+                        dateTime: val.dateTime
 
 
-    //                 });
+                    });
 
-    //             });
+                });
 
-    //             setData(array);
+                setData(array);
 
-    //         });
-    //}
+            });
+    }
     return (
         <Box>
             <Box>
