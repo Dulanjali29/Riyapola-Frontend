@@ -4,11 +4,14 @@ import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
+import { DataGrid } from '@mui/x-data-grid';
 
 import InputText from '../../common/InputText/InputText'
 import MyButton from '../../common/Button/MyButton'
 
 export default function CarView() {
+  
+  const [data, setData] = useState([])
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
   const [noOfPassangers, setNoOfPassangers] = useState("");
@@ -60,7 +63,41 @@ export default function CarView() {
   const clear = () => {
     
   }
+  const columns = [
+    { field: 'brand', headerName: 'Brand ', width: 150 },
+    { field: 'module', headerName: 'Module ', width: 150 },
+    { field: 'noOfPassangers', headerName: 'Passengers', width: 150 },
+    { field: 'fuelType', headerName: 'Fuel Type', width: 150 },
+    { field: 'trMode', headerName: 'Transmission Type', width: 150 },
+    { field: 'daylyPrice', headerName: 'Daily Rental Price', width: 150 },
+    { field: 'status', headerName: 'Status', width: 150 },
+    {
+      field: 'actions',
+      headerName: 'Action',
+      width: 150,
+      renderCell: (params) => (
+        <div>
+          <IconButton
+            color='info'
+            aria-label="edit"
+            onClick={() => { clickOpen(params.row) 
+          
+            }}
+          >
+            <EditIcon />
+          </IconButton>
 
+          <IconButton
+            color='error'
+            aria-label="delete"
+            onClick={() => { deleted(params.row.id) }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </div>
+      ),
+    },
+  ];
   return (
     <Box>
       <Box>
@@ -165,6 +202,31 @@ export default function CarView() {
           </Box>
         </Box>
       </Box>
+      <Box>
+                <Typography
+                    sx={{ flex: '1 1 100%', color: '#000080', marginTop: "20px" }}
+                    variant="h5"
+                    id="tableTitle"
+                    component="div"
+                >
+                    Cars Details
+                </Typography>
+                <div style={{ height: 400, width: '100%', paddingTop: 30 }}>
+                    <DataGrid
+                        rows={data}
+                        columns={columns}
+                        initialState={{
+                            pagination: {
+                                paginationModel: { page: 0, pageSize: 10 },
+                            },
+                        }}
+                        pageSizeOptions={[5, 10]}
+                        checkboxSelection
+                    />
+
+                    
+                </div>
+            </Box>
 
 
     </Box>

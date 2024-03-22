@@ -69,6 +69,19 @@ export default function Customers() {
 
             });
     }
+    const deleteCustomer = (id) => {
+        instance.delete('/delete/' + id)
+
+            .then(response => {
+                console.log(response)
+                getAlldmin()
+
+            })
+            .catch(error => {
+                console.error(error);
+
+            });
+    }
     return (
         <Box>
             <Box>
