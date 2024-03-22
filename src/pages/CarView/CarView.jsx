@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Autocomplete, Box, Button, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
 import { DataGrid } from '@mui/x-data-grid';
-
+import instance from '../../service/AxiosOrder';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import InputText from '../../common/InputText/InputText'
 import MyButton from '../../common/Button/MyButton'
 
@@ -64,10 +67,11 @@ export default function CarView() {
     
   }
   const columns = [
+    { field: 'id', headerName: 'ID ', width: 150 },
     { field: 'brand', headerName: 'Brand ', width: 150 },
     { field: 'module', headerName: 'Module ', width: 150 },
     { field: 'noOfPassangers', headerName: 'Passengers', width: 150 },
-    { field: 'fuelType', headerName: 'Fuel Type', width: 150 },
+    { field: 'fueltype', headerName: 'Fuel Type', width: 150 },
     { field: 'trMode', headerName: 'Transmission Type', width: 150 },
     { field: 'daylyPrice', headerName: 'Daily Rental Price', width: 150 },
     { field: 'status', headerName: 'Status', width: 150 },
@@ -90,7 +94,7 @@ export default function CarView() {
           <IconButton
             color='error'
             aria-label="delete"
-            onClick={() => { deleted(params.row.id) }}
+            onClick={() => { deleteCar(params.row.id) }}
           >
             <DeleteIcon />
           </IconButton>
@@ -98,6 +102,36 @@ export default function CarView() {
       ),
     },
   ];
+  const getAllCars = () => {
+    instance({
+        method: 'get',
+        url: '/car/getAllCar',
+    })
+        .then(function (response) {
+
+            const array = [];
+            response.data.forEach(val => {
+                array.push({
+                    id: val.car_id,
+                    brand: val.brand,
+                    model: val.model,
+                    noOfPassangers: val.noOfPassangers,
+                    fueltype: val.fuelType,
+                    trMode: val.transmissionMode,
+                    dailyRentalPrice:val.dailyRentalPrice,
+                    status:val.status,
+
+                });
+
+            });
+
+            setData(array);
+
+        });
+}
+useEffect(() => {
+    getAllCars(setData)
+}, []);
   return (
     <Box>
       <Box>
