@@ -11,11 +11,11 @@ export default function Customers() {
     const columns = [
         
         { field: 'id', headerName: 'ID', width: 100 },
-        { field: 'firstname', headerName: 'First Name', width: 200 },
+        { field: 'firstname', headerName: 'First Name', width: 150 },
         { field: 'lastname', headerName: 'Last Name', width: 200 },
-        { field: 'nic', headerName: 'NIC', width: 200 },
+        { field: 'nic', headerName: 'NIC', width: 150 },
         { field: 'address', headerName: 'Address', width: 200 },
-        { field: 'contact', headerName: 'Contact', width: 200 },
+        { field: 'contact', headerName: 'Contact', width: 150 },
         { field: 'email', headerName: 'E-Mail', width: 200 },
         { field: 'dateTime', headerName: 'Date and Time', width: 200 },
         {

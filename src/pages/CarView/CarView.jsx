@@ -28,7 +28,10 @@ export default function CarView() {
   const [popup,setPopup]=useState(false)
   const[updateData,setUpdateData]=useState()
 
-
+  const updateCar=()=>{
+    getAllCars()
+    closePopup()
+}
   const openPopup=(val)=>{
     setPopup(true)
     setUpdateData(val)
