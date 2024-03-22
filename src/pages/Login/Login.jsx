@@ -15,7 +15,7 @@ export default function Login() {
   const [password,setPassword]=useState("");
 
   const adminLogin=()=>{
-    instance.post('/login', {
+    instance.post('/admin/login', {
       userName: username,
       password: password
     })

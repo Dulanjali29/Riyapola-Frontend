@@ -17,13 +17,13 @@ export default function CarView() {
   const [data, setData] = useState([])
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
-  const [noOfPassangers, setNoOfPassangers] = useState("");
+  const [passangers, setPassangers] = useState("");
   const [fueltype, setFuelType] = useState("");
   const [transmissionMode, setTransmissionMode] = useState("");
   const [dailyRentalPrice, setDailyRentalPrice] = useState("");
   const [status, setStatus] = useState("");
 
-  const numberOfSeats = [
+  const noOfpas = [
     { label: '1', value: '1' },
     { label: '2', value: '2' },
     { label: '3', value: '3' },
@@ -61,7 +61,25 @@ export default function CarView() {
   });
 
   const saveCar = () => {
-   
+    instance.post('/car/carRegister', {
+
+      brand: brand,
+      model: model,
+      noOfPassangers:passangers,
+      fuelType: fueltype,
+      transmissionMode: transmissionMode,
+      dailyRentalPrice:dailyRentalPrice,
+      status:status,
+  })
+      .then(function (response) {
+          console.log(response);
+          // clear()
+          getAllCars();
+      })
+      .catch(function (error) {
+          console.log(error);
+
+      });
   }
   const clear = () => {
     
@@ -69,11 +87,11 @@ export default function CarView() {
   const columns = [
     { field: 'id', headerName: 'ID ', width: 150 },
     { field: 'brand', headerName: 'Brand ', width: 150 },
-    { field: 'module', headerName: 'Module ', width: 150 },
-    { field: 'noOfPassangers', headerName: 'Passengers', width: 150 },
+    { field: 'model', headerName: 'Model ', width: 150 },
+    { field: 'noOfpas', headerName: 'Passangers', width: 150 },
     { field: 'fueltype', headerName: 'Fuel Type', width: 150 },
-    { field: 'trMode', headerName: 'Transmission Type', width: 150 },
-    { field: 'daylyPrice', headerName: 'Daily Rental Price', width: 150 },
+    { field: 'trMode', headerName: 'Transmission Type', width: 200 },
+    { field: 'dailyPrice', headerName: 'Daily Rental Price', width: 150 },
     { field: 'status', headerName: 'Status', width: 150 },
     {
       field: 'actions',
@@ -115,10 +133,10 @@ export default function CarView() {
                     id: val.car_id,
                     brand: val.brand,
                     model: val.model,
-                    noOfPassangers: val.noOfPassangers,
+                    passangers: val.noOfPassengers,
                     fueltype: val.fuelType,
                     trMode: val.transmissionMode,
-                    dailyRentalPrice:val.dailyRentalPrice,
+                    dailyPrice:val.dailyRentalPrice,
                     status:val.status,
 
                 });
@@ -159,11 +177,11 @@ useEffect(() => {
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
-                options={numberOfSeats}
+                options={noOfpas}
                 sx={{ width: '100%' }}
-                value={noOfPassangers}
+                value={passangers}
                 renderInput={(params) => <TextField {...params} label="Number Of Passengers" />}
-                onChange={(event, value) => setNoOfPassangers(value.value)}
+                onChange={(event, value) => setPassangers(value.value)}
               />
             </Box>
           </Grid>
@@ -207,7 +225,7 @@ useEffect(() => {
                 sx={{ width: '100%' }}
                 value={status}
                 renderInput={(params) => <TextField {...params} label="Availability" />}
-                onChange={(event, value) => setTransmissionMode(value.value)}
+                onChange={(event, value) => setStatus(value.value)}
               />
             </Box>
           </Grid>
