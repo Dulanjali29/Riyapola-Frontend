@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Autocomplete, Box, Button, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
@@ -9,11 +9,13 @@ import instance from '../../service/AxiosOrder';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+
 import InputText from '../../common/InputText/InputText'
 import MyButton from '../../common/Button/MyButton'
+import CarCard from '../../component/CarCard/CarCard';
 
 export default function CarView() {
-  
+
   const [data, setData] = useState([])
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
@@ -23,6 +25,17 @@ export default function CarView() {
   const [dailyRentalPrice, setDailyRentalPrice] = useState("");
   const [status, setStatus] = useState("");
 
+  const [popup,setPopup]=useState(false)
+  const[updateData,setUpdateData]=useState()
+
+
+  const openPopup=(val)=>{
+    setPopup(true)
+    setUpdateData(val)
+}
+const closePopup=()=>{
+    setPopup(false)
+}
   const noOfpas = [
     { label: '1', value: '1' },
     { label: '2', value: '2' },
@@ -65,19 +78,19 @@ export default function CarView() {
 
       brand: brand,
       model: model,
-      noOfPassangers:passangers,
+      noOfPassangers: passangers,
       fuelType: fueltype,
       transmissionMode: transmissionMode,
-      dailyRentalPrice:dailyRentalPrice,
-      status:status,
-  })
+      dailyRentalPrice: dailyRentalPrice,
+      status: status,
+    })
       .then(function (response) {
-          console.log(response);
-          clear()
-          getAllCars();
+        console.log(response);
+        clear()
+        getAllCars();
       })
       .catch(function (error) {
-          console.log(error);
+        console.log(error);
 
       });
   }
@@ -109,8 +122,9 @@ export default function CarView() {
           <IconButton
             color='info'
             aria-label="edit"
-            onClick={() => { clickOpen(params.row) 
-          
+            onClick={() => {
+             openPopup(params.row)
+
             }}
           >
             <EditIcon />
@@ -130,46 +144,46 @@ export default function CarView() {
   const deleteCar = (id) => {
     instance.delete('/car/deleteCar/' + id)
 
-        .then(response => {
-            console.log(response)
-            getAllCars()
+      .then(response => {
+        console.log(response)
+        getAllCars()
 
-        })
-        .catch(error => {
-            console.error(error);
+      })
+      .catch(error => {
+        console.error(error);
 
-        });
-}
+      });
+  }
   const getAllCars = () => {
     instance({
-        method: 'get',
-        url: '/car/getAllCar',
+      method: 'get',
+      url: '/car/getAllCar',
     })
-        .then(function (response) {
+      .then(function (response) {
 
-            const array = [];
-            response.data.forEach(val => {
-                array.push({
-                    id: val.car_id,
-                    brand: val.brand,
-                    model: val.model,
-                    passangers: val.noOfPassengers,
-                    fueltype: val.fuelType,
-                    trMode: val.transmissionMode,
-                    dailyPrice:val.dailyRentalPrice,
-                    status:val.status,
+        const array = [];
+        response.data.forEach(val => {
+          array.push({
+            id: val.car_id,
+            brand: val.brand,
+            model: val.model,
+            passangers: val.noOfPassengers,
+            fueltype: val.fuelType,
+            trMode: val.transmissionMode,
+            dailyPrice: val.dailyRentalPrice,
+            status: val.status,
 
-                });
-
-            });
-
-            setData(array);
+          });
 
         });
-}
-useEffect(() => {
+
+        setData(array);
+
+      });
+  }
+  useEffect(() => {
     getAllCars(setData)
-}, []);
+  }, []);
   return (
     <Box>
       <Box>
@@ -265,7 +279,7 @@ useEffect(() => {
           </Grid>
 
         </Grid>
-        <Box sx={{display:'flex',alignItems:'center',justifyContent:'end',gap:3}}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'end', gap: 3 }}>
           <Box>
             <MyButton name={"Save"} width={'200px'} background={"#196F3D"} hoverColor={"#76D7C4  "} onClick={saveCar} />
           </Box>
@@ -275,30 +289,32 @@ useEffect(() => {
         </Box>
       </Box>
       <Box>
-                <Typography
-                    sx={{ flex: '1 1 100%', color: '#000080', marginTop: "20px" }}
-                    variant="h5"
-                    id="tableTitle"
-                    component="div"
-                >
-                    Cars Details
-                </Typography>
-                <div style={{ height: 400, width: '100%', paddingTop: 30 }}>
-                    <DataGrid
-                        rows={data}
-                        columns={columns}
-                        initialState={{
-                            pagination: {
-                                paginationModel: { page: 0, pageSize: 10 },
-                            },
-                        }}
-                        pageSizeOptions={[5, 10]}
-                        checkboxSelection
-                    />
+        <Typography
+          sx={{ flex: '1 1 100%', color: '#000080', marginTop: "20px" }}
+          variant="h5"
+          id="tableTitle"
+          component="div"
+        >
+          Cars Details
+        </Typography>
+        <div style={{ height: 400, width: '100%', paddingTop: 30 }}>
+          <DataGrid
+            rows={data}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 10 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+            checkboxSelection
+          />
 
-                    
-                </div>
-            </Box>
+          {popup &&
+            <CarCard open={popup} close={closePopup} updateData={updateData}  />
+          }
+        </div>
+      </Box>
 
 
     </Box>
