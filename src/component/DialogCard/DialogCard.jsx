@@ -7,6 +7,7 @@ import InputText from '../../common/InputText/InputText';
 import IconButton from '@mui/material/IconButton';
 import MyButton from '../../common/Button/MyButton';
 import instance from '../../service/AxiosOrder';
+import Alert from '../../common/Alert/Alert';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -18,28 +19,33 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
     const [lastName, setLastName] = useState(updateData?.lastname)
     const [userName, setUserName] = useState(updateData?.username)
     const [password, setPassword] = useState(updateData?.password)
-   
+
 
     const save = () => {
-        instance.put('admin/updateAdmin/' + updateData.id, {
-            firstName: firstName,
-            lastName: lastName,
-            userName: userName,
-            password: password,
-            role:"Admin",
-           
-        })
-            .then(function (response) {
-                console.log(response);
-                updateAdmin()
-              
-                clear()
+        if (firstName && lastName && userName && password != null) {
+            instance.put('admin/updateAdmin/' + updateData.id, {
+                firstName: firstName,
+                lastName: lastName,
+                userName: userName,
+                password: password,
+                role: "Admin",
 
             })
-            .catch(function (error) {
-                console.log(error);
-              
-            }); 
+                .then(function (response) {
+                    console.log(response);
+                    updateAdmin()
+                    Alert("success", "Admin data has been updated!")
+                    clear()
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+
+                });
+        } else {
+            Alert("error", "Please enter data!")
+        }
+
 
     }
 
@@ -48,7 +54,7 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
         setLastName("");
         setUserName("");
         setPassword("");
-      
+
     }
 
     return (
@@ -100,7 +106,7 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
                                 </Box>
 
                             </Grid>
-                           
+
 
                         </Grid>
                     </Box>
@@ -112,7 +118,7 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
                         <Box sx={{}}>
                             <MyButton name={"Clear"} width={'150px'} background={"#CA6F1E "} hoverColor={"#008080"} onClick={clear} />
                         </Box>
-                        
+
                     </Box>
 
                 </Box>

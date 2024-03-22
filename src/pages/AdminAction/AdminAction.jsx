@@ -24,6 +24,7 @@ export default function AdminAction() {
     const[updateData,setUpdateData]=useState()
 
     const updateAdmin=()=>{
+       
         getAlldmin()
         closePopup()
     }
@@ -93,18 +94,35 @@ export default function AdminAction() {
        
     }
     const deleteAdmin = (id) => {
-        
-        instance.delete('/admin/deleteAdmin/' + id)
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                instance.delete('/admin/deleteAdmin/' + id)
 
-            .then(response => {
-                console.log(response)
-                getAlldmin()
-
-            })
-            .catch(error => {
-                console.error(error);
-
-            });
+                .then(response => {
+                    console.log(response)
+                    getAlldmin()
+    
+                })
+                .catch(error => {
+                    console.error(error);
+    
+                });
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+              });
+            }
+          });
+       
     }
     const clear = () => {
         setFirstName(""),
