@@ -21,7 +21,7 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
    
 
     const save = () => {
-        instance.put('/updateAdmin/' + updateData.id, {
+        instance.put('admin/updateAdmin/' + updateData.id, {
             firstName: firstName,
             lastName: lastName,
             userName: userName,

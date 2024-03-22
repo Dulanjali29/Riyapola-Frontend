@@ -70,7 +70,7 @@ export default function AdminAction() {
     ];
 
     const save = () => {
-        instance.post('/saveAdmin', {
+        instance.post('/admin/saveAdmin', {
 
             firstName: firstName,
             lastName: lastName,
@@ -89,7 +89,7 @@ export default function AdminAction() {
             });
     }
     const deleteAdmin = (id) => {
-        instance.delete('/deleteAdmin/' + id)
+        instance.delete('/admin/deleteAdmin/' + id)
 
             .then(response => {
                 console.log(response)
@@ -111,7 +111,7 @@ export default function AdminAction() {
     const getAlldmin = () => {
         instance({
             method: 'get',
-            url: '/getAllAdmin',
+            url: '/admin/getAllAdmin',
         })
             .then(function (response) {
 
