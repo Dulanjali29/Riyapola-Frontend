@@ -4,6 +4,7 @@ import { Box, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import InputText from '../../common/InputText/InputText'
 import login from '../../assets/img/login3.jpg'
+import Alert from '../../common/Alert/Alert'
 import MyButton from '../../common/Button/MyButton'
 import SecondFooter from '../../common/SecondFooter/SecondFooter'
 
@@ -27,12 +28,13 @@ export default function Login() {
         console.log(localStorage.getItem('stmToken'));
         
         window.location.reload();
+        Alert("success","login successful!")
 
       
       })
       .catch(function (error) {
         console.log(error);
-
+        Alert("error","Please enter valid username or password")
       });
 
   }

@@ -1,13 +1,11 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Alert, Box, Grid, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import Autocomplete from '@mui/material/Autocomplete'
-import TextField from '@mui/material/TextField'
 import { DataGrid } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import instance from '../../service/AxiosOrder';
-
+import Swal from 'sweetalert2';
 
 
 import InputText from '../../common/InputText/InputText'
@@ -70,6 +68,7 @@ export default function AdminAction() {
     ];
 
     const save = () => {
+       if(firstName && lastName && userName && password && role !=null){
         instance.post('/admin/saveAdmin', {
 
             firstName: firstName,
@@ -82,13 +81,19 @@ export default function AdminAction() {
                 console.log(response);
                 clear()
                 getAlldmin();
+                Alert("success","adminsaved successful !")
             })
             .catch(function (error) {
                 console.log(error);
 
             });
+       }else{
+        Alert("error","Please Enter Data !")
+       }
+       
     }
     const deleteAdmin = (id) => {
+        
         instance.delete('/admin/deleteAdmin/' + id)
 
             .then(response => {

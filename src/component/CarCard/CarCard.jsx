@@ -75,8 +75,10 @@ export default function CarCard({ open, close, updateData, updateCar }) {
             keepMounted
             onClose={close}
             aria-describedby="alert-dialog-slide-description"
-        >
-            <Card sx={{ minwidth: "1000px", maxWidth: "1400", height: "400px", padding: 5 }}>
+          
+        >  
+            <Card sx={{  padding: 5 }}>
+               
                 <Box sx={{ marginTop: "-40px", marginLeft: "520px", cursor: "pointer" }}>
                     <IconButton
                         color='error'
@@ -183,6 +185,7 @@ export default function CarCard({ open, close, updateData, updateCar }) {
                         </Box>
                     </Box>
                 </Box>
+                
             </Card>
         </Dialog>
 

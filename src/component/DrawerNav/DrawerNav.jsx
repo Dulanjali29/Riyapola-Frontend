@@ -113,7 +113,7 @@ export default function DrawerNav() {
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar position="fixed" open={open}>
+            <AppBar position="fixed"  open={open}>
                 <Toolbar sx={{backgroundColor:'#34495E'}}>
                     <IconButton
                         color="inherit"
@@ -127,7 +127,7 @@ export default function DrawerNav() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div" >
+                    <Typography variant="h6" noWrap component="div"  >
                         Welcom to Riyapola PVT Ltd
                     </Typography>
                     <Button sx={{ marginLeft: 150, borderRadius: 10 }} variant="contained" color="error" onClick={() => { logoutAction() }}>Logout</Button>
