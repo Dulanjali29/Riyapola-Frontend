@@ -73,7 +73,7 @@ export default function CarView() {
   })
       .then(function (response) {
           console.log(response);
-          // clear()
+          clear()
           getAllCars();
       })
       .catch(function (error) {
@@ -82,7 +82,14 @@ export default function CarView() {
       });
   }
   const clear = () => {
-    
+    setBrand("");
+    setModel("");
+    setPassangers("");
+    setFuelType("");
+    setTransmissionMode("");
+    setDailyRentalPrice("");
+    setStatus("");
+
   }
   const columns = [
     { field: 'id', headerName: 'ID ', width: 150 },
