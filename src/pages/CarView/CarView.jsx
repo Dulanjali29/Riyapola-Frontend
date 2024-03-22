@@ -127,6 +127,19 @@ export default function CarView() {
       ),
     },
   ];
+  const deleteCar = (id) => {
+    instance.delete('/car/deleteCar/' + id)
+
+        .then(response => {
+            console.log(response)
+            getAllCars()
+
+        })
+        .catch(error => {
+            console.error(error);
+
+        });
+}
   const getAllCars = () => {
     instance({
         method: 'get',
