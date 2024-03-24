@@ -12,6 +12,7 @@ import TextField from '@mui/material/TextField';
 
 import InputText from '../../common/InputText/InputText';
 import MyButton from '../../common/Button/MyButton';
+import instance from '../../service/AxiosOrder';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -65,7 +66,26 @@ export default function CarCard({ open, close, updateData, updateCar }) {
       });
 
       const saveCar=()=>{
+        instance.put('/car/updateCar/'+updateData.id, {
 
+            brand: brand,
+            model: model,
+            noOfPassangers: passangers,
+            fuelType: fueltype,
+            transmissionMode: transmissionMode,
+            dailyRentalPrice: dailyRentalPrice,
+            status: status,
+          })
+            .then(function (response) {
+              console.log(response);
+              updateCar()
+              clear()
+              getAllCars();
+            })
+            .catch(function (error) {
+              console.log(error);
+      
+            });
       }
       const clear=()=>{
 
