@@ -170,7 +170,7 @@ const closePopup=()=>{
             id: val.car_id,
             brand: val.brand,
             model: val.model,
-            passangers: val.noOfPassengers,
+            noOfpas: val.noOfPassengers,
             fueltype: val.fuelType,
             trMode: val.transmissionMode,
             dailyPrice: val.dailyRentalPrice,
