@@ -13,6 +13,7 @@ import TextField from '@mui/material/TextField';
 import InputText from '../../common/InputText/InputText';
 import MyButton from '../../common/Button/MyButton';
 
+
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -77,7 +78,7 @@ export default function CarCard({ open, close, updateData, updateCar }) {
             aria-describedby="alert-dialog-slide-description"
           
         >  
-            <Card sx={{  padding: 5 }}>
+            <Card >
                
                 <Box sx={{ marginTop: "-40px", marginLeft: "520px", cursor: "pointer" }}>
                     <IconButton
@@ -91,19 +92,19 @@ export default function CarCard({ open, close, updateData, updateCar }) {
                 <Box sx={{ display: 'flex', justifyContent: 'center', color: '#4169E1', marginTop: "-10px", marginBottom: "10px" }}>
                     <h1 >Update Car Information</h1>
                 </Box >
-                <Box>
+                <Box sx={{margin:'10px'}}>
                     <Grid container spacing={2}>
-                        <Grid item xs={2}>
+                        <Grid item xs={6}>
                             <Box>
                                 <InputText label={"Brand Name"} value={brand} width={"100%"} type={'text'} onChange={(val) => setBrand(val.target.value)} />
                             </Box>
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={6}>
                             <Box>
                                 <InputText label={"Model Name"} value={model} width={"100%"} type={'text'} onChange={(val) => setModel(val.target.value)} />
                             </Box>
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={6}>
                             <Box>
                                 <Autocomplete
                                     disablePortal
@@ -116,7 +117,7 @@ export default function CarCard({ open, close, updateData, updateCar }) {
                                 />
                             </Box>
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={6}>
                             <Box>
                                 <Autocomplete
                                     disablePortal
@@ -129,7 +130,7 @@ export default function CarCard({ open, close, updateData, updateCar }) {
                                 />
                             </Box>
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={6}>
                             <Box>
                                 <Autocomplete
                                     disablePortal
@@ -147,7 +148,7 @@ export default function CarCard({ open, close, updateData, updateCar }) {
                                 <InputText label={"Daily Rental Price"} value={dailyRentalPrice} width={"100%"} type={'text'} onChange={(val) => setDailyRentalPrice(val.target.value)} />
                             </Box>
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={6}>
                             <Box>
                                 <Autocomplete
                                     disablePortal
@@ -160,7 +161,7 @@ export default function CarCard({ open, close, updateData, updateCar }) {
                                 />
                             </Box>
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={6}>
                             <Box>
                                 <Button
                                     component="label"
@@ -168,6 +169,7 @@ export default function CarCard({ open, close, updateData, updateCar }) {
                                     variant="contained"
                                     tabIndex={-1}
                                     startIcon={<CloudUploadIcon />}
+                                    sx={{marginTop:'10px'}}
                                 >
                                     Upload Image
                                     <VisuallyHiddenInput type="file" />
@@ -176,7 +178,7 @@ export default function CarCard({ open, close, updateData, updateCar }) {
                         </Grid>
 
                     </Grid>
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'end', gap: 3 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'end', gap: 3 ,marginTop:'20px'}}>
                         <Box>
                             <MyButton name={"Save"} width={'200px'} background={"#196F3D"} hoverColor={"#76D7C4  "} onClick={saveCar} />
                         </Box>
