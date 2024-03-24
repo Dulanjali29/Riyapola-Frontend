@@ -29,17 +29,17 @@ export default function CarView() {
   const [popup,setPopup]=useState(false)
   const[updateData,setUpdateData]=useState()
 
-  const updateCar=()=>{
-    getAllCars()
-    closePopup()
-}
+
   const openPopup=(val)=>{
     setPopup(true)
     setUpdateData(val)
 }
-const closePopup=()=>{
+const closebtn=()=>{
     setPopup(false)
+    getAllCars()
 }
+
+{closebtn}
   const noOfpas = [
     { label: '1', value: '1' },
     { label: '2', value: '2' },
@@ -212,8 +212,8 @@ const closePopup=()=>{
       <Box>
 
       </Box>
-      <Box>
-        <Typography>
+      <Box sx={{margin:'10px'}}>
+        <Typography sx={{fontSize:'30px',fontWeight:'bold',color: '#000080'}}>
           Car Action
         </Typography>
       </Box>
@@ -335,7 +335,7 @@ const closePopup=()=>{
           />
 
           {popup &&
-            <CarCard open={popup} close={closePopup} updateData={updateData}  />
+            <CarCard open={popup} close={closebtn} updateData={updateData}  />
           }
         </div>
       </Box>

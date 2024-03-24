@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MyButton from '../../common/Button/MyButton';
 import instance from '../../service/AxiosOrder';
 import Alert from '../../common/Alert/Alert';
+import Swal from 'sweetalert2';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -20,7 +21,7 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
     const [userName, setUserName] = useState(updateData?.username)
     const [password, setPassword] = useState(updateData?.password)
 
-
+    
     const save = () => {
         if (firstName && lastName && userName && password != null) {
             instance.put('admin/updateAdmin/' + updateData.id, {
@@ -34,7 +35,14 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
                 .then(function (response) {
                     console.log(response);
                     updateAdmin()
-                    Alert("success", "Admin data has been updated!")
+                    // Alert("success", "Admin data has been updated!")
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "admin updated!",
+                        showConfirmButton: false,
+                        timer: 1500
+                      });
                     clear()
 
                 })
@@ -48,7 +56,7 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
 
 
     }
-
+  
     const clear = () => {
         setFirstName("");
         setLastName("");

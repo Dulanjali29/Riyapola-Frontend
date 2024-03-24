@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import styled from '@emotion/styled';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import TextField from '@mui/material/TextField';
-
+import Swal from 'sweetalert2';
 
 import InputText from '../../common/InputText/InputText';
 import MyButton from '../../common/Button/MyButton';
@@ -20,7 +20,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function CarCard({ open, close, updateData, updateCar }) {
+export default function CarCard({ open, close, updateData }) {
     const [brand, setBrand] = useState(updateData?.brand);
     const [model, setModel] = useState(updateData?.model);
     const [passangers, setPassangers] = useState(updateData?.noOfpas);
@@ -71,7 +71,7 @@ export default function CarCard({ open, close, updateData, updateCar }) {
 
             brand: brand,
             model: model,
-            noOfPassangers: passangers,
+            noOfPassengers: passangers,
             fuelType: fueltype,
             transmissionMode: transmissionMode,
             dailyRentalPrice: dailyRentalPrice,
@@ -79,8 +79,15 @@ export default function CarCard({ open, close, updateData, updateCar }) {
           })
             .then(function (response) {
               console.log(response);
-              updateCar()
-              clear()
+                Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "car updated!",
+                        showConfirmButton: false,
+                        timer: 1500
+                      });
+              close()
+            
               getAllCars();
             })
             .catch(function (error) {
@@ -196,7 +203,7 @@ export default function CarCard({ open, close, updateData, updateCar }) {
                                     variant="contained"
                                     tabIndex={-1}
                                     startIcon={<CloudUploadIcon />}
-                                    sx={{marginTop:'10px'}}
+                                    sx={{marginTop:'10px',marginLeft:'83px' ,width:'200px'}}
                                 >
                                     Upload Image
                                     <VisuallyHiddenInput type="file" />
@@ -209,9 +216,7 @@ export default function CarCard({ open, close, updateData, updateCar }) {
                         <Box>
                             <MyButton name={"Save"} width={'200px'} background={"#196F3D"} hoverColor={"#76D7C4  "} onClick={saveCar} />
                         </Box>
-                        <Box>
-                            <MyButton name={"Clear"} width={'200px'} background={"#EB984E"} hoverColor={"#F5CBA7 "} onClick={clear} />
-                        </Box>
+                       
                     </Box>
                 </Box>
                 

@@ -128,7 +128,7 @@ export default function DrawerNav() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div"  >
-                        Welcom to Riyapola PVT Ltd
+                       Riyapola Admin Panel
                     </Typography>
                     <Button sx={{ marginLeft: 150, borderRadius: 10 }} variant="contained" color="error" onClick={() => { logoutAction() }}>Logout</Button>
                 </Toolbar>
