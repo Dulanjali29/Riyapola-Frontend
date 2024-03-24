@@ -10,6 +10,7 @@ import styled from '@emotion/styled';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import TextField from '@mui/material/TextField';
 
+
 import InputText from '../../common/InputText/InputText';
 import MyButton from '../../common/Button/MyButton';
 import instance from '../../service/AxiosOrder';
@@ -106,7 +107,7 @@ export default function CarCard({ open, close, updateData, updateCar }) {
         >  
             <Card >
                
-                <Box sx={{ marginTop: "-40px", marginLeft: "520px", cursor: "pointer" }}>
+                <Box sx={{  marginLeft: "560px", cursor: "pointer" }}>
                     <IconButton
                         color='error'
                         aria-label="close"

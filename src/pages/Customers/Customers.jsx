@@ -5,6 +5,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import instance from '../../service/AxiosOrder';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Swal from 'sweetalert2';
 
 export default function Customers() {
     const [data, setData] = useState([])
@@ -28,7 +29,7 @@ export default function Customers() {
                     <IconButton
                         color='error'
                         aria-label="delete"
-                        onClick={() => deleteAdmin(params.row.id)}
+                        onClick={() => deleteCustomer(params.row.id)}
                     >
                         <DeleteIcon />
                     </IconButton>
@@ -70,17 +71,46 @@ export default function Customers() {
             });
     }
     const deleteCustomer = (id) => {
-        instance.delete('/delete/' + id)
+        // instance.delete('/delete/' + id)
 
-            .then(response => {
-                console.log(response)
-                getAlldmin()
+        //     .then(response => {
+        //         console.log(response)
+        //         getAlldmin()
 
-            })
-            .catch(error => {
-                console.error(error);
+        //     })
+        //     .catch(error => {
+        //         console.error(error);
 
-            });
+        //     });
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    instance.delete('/admin/deleteCustomer/' + id)
+    
+                    .then(response => {
+                        console.log(response)
+                        getAllCustomers()
+        
+                    })
+                    .catch(error => {
+                        console.error(error);
+        
+                    });
+                  Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                  });
+                }
+              });
     }
     return (
         <Box>
