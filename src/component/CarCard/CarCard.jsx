@@ -88,7 +88,13 @@ export default function CarCard({ open, close, updateData, updateCar }) {
             });
       }
       const clear=()=>{
-
+        setBrand("");
+        setModel("");
+        setPassangers("");
+        setFuelType("");
+        setTransmissionMode("");
+        setDailyRentalPrice("");
+        setStatus("");
       }
     return (
         <Dialog open={open}
