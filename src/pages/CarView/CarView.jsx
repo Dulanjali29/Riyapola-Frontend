@@ -274,6 +274,7 @@ const closePopup=()=>{
                 variant="contained"
                 tabIndex={-1}
                 startIcon={<CloudUploadIcon />}
+                sx={{marginTop:'10px'}}
               >
                 Upload Image
                 <VisuallyHiddenInput type="file" />
