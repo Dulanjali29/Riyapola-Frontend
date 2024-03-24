@@ -9,6 +9,7 @@ import instance from '../../service/AxiosOrder';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import Swal from 'sweetalert2';
 
 import InputText from '../../common/InputText/InputText'
 import MyButton from '../../common/Button/MyButton'
@@ -145,17 +146,7 @@ const closePopup=()=>{
     },
   ];
   const deleteCar = (id) => {
-    instance.delete('/car/deleteCar/' + id)
-
-      .then(response => {
-        console.log(response)
-        getAllCars()
-
-      })
-      .catch(error => {
-        console.error(error);
-
-      });
+ 
 
       Swal.fire({
         title: "Are you sure?",

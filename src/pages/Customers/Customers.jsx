@@ -71,17 +71,7 @@ export default function Customers() {
             });
     }
     const deleteCustomer = (id) => {
-        // instance.delete('/delete/' + id)
-
-        //     .then(response => {
-        //         console.log(response)
-        //         getAlldmin()
-
-        //     })
-        //     .catch(error => {
-        //         console.error(error);
-
-        //     });
+  
 
             Swal.fire({
                 title: "Are you sure?",
