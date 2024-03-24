@@ -19,13 +19,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function CarCard({ open, close, updateData, updateCar }) {
-    const [brand, setBrand] = useState("");
-    const [model, setModel] = useState("");
-    const [passangers, setPassangers] = useState("");
-    const [fueltype, setFuelType] = useState("");
-    const [transmissionMode, setTransmissionMode] = useState("");
-    const [dailyRentalPrice, setDailyRentalPrice] = useState("");
-    const [status, setStatus] = useState("");
+    const [brand, setBrand] = useState(updateData?.brand);
+    const [model, setModel] = useState(updateData?.model);
+    const [passangers, setPassangers] = useState(updateData?.noOfpas);
+    const [fueltype, setFuelType] = useState(updateData?.fueltype);
+    const [transmissionMode, setTransmissionMode] = useState(updateData?.trMode);
+    const [dailyRentalPrice, setDailyRentalPrice] = useState(updateData?.dailyPrice);
+    const [status, setStatus] = useState(updateData?.status);
 
     const noOfpas = [
         { label: '1', value: '1' },
@@ -143,7 +143,7 @@ export default function CarCard({ open, close, updateData, updateCar }) {
                                 />
                             </Box>
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={6}>
                             <Box>
                                 <InputText label={"Daily Rental Price"} value={dailyRentalPrice} width={"100%"} type={'text'} onChange={(val) => setDailyRentalPrice(val.target.value)} />
                             </Box>
