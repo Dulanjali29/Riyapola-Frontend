@@ -20,21 +20,23 @@ export default function AdminAction() {
     const [password, setpassword] = useState("")
     const [role, setRole] = useState("")
 
-    const [popup,setPopup]=useState(false)
-    const[updateData,setUpdateData]=useState()
+    const [popup, setPopup] = useState(false)
+    const [updateData, setUpdateData] = useState()
 
-    const updateAdmin=()=>{
-       
-        getAlldmin()
-        closePopup()
-    }
-    const openPopup=(val)=>{
+    // const updateAdmin=()=>{
+
+    //     getAlldmin()
+    //     closePopup()
+    // }
+    const openPopup = (val) => {
         setPopup(true)
         setUpdateData(val)
     }
-    const closePopup=()=>{
+    const closebtn = () => {
         setPopup(false)
+        getAlldmin()
     }
+    { closebtn }
     const columns = [
         { field: 'id', headerName: 'ID', width: 100 },
         { field: 'firstname', headerName: 'First Name', width: 200 },
@@ -69,29 +71,29 @@ export default function AdminAction() {
     ];
 
     const save = () => {
-       if(firstName && lastName && userName && password && role !=null){
-        instance.post('/admin/saveAdmin', {
+        if (firstName && lastName && userName && password && role != null) {
+            instance.post('/admin/saveAdmin', {
 
-            firstName: firstName,
-            lastName: lastName,
-            userName: userName,
-            password: password,
-            role: role
-        })
-            .then(function (response) {
-                console.log(response);
-                clear()
-                getAlldmin();
-                Alert("success","adminsaved successful !")
+                firstName: firstName,
+                lastName: lastName,
+                userName: userName,
+                password: password,
+                role: role
             })
-            .catch(function (error) {
-                console.log(error);
+                .then(function (response) {
+                    console.log(response);
+                    clear()
+                    getAlldmin();
+                    Alert("success", "adminsaved successful !")
+                })
+                .catch(function (error) {
+                    console.log(error);
 
-            });
-       }else{
-        Alert("error","Please Enter Data !")
-       }
-       
+                });
+        } else {
+            Alert("error", "Please Enter Data !")
+        }
+
     }
     const deleteAdmin = (id) => {
         Swal.fire({
@@ -102,27 +104,27 @@ export default function AdminAction() {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 instance.delete('/admin/deleteAdmin/' + id)
 
-                .then(response => {
-                    console.log(response)
-                    getAlldmin()
-    
-                })
-                .catch(error => {
-                    console.error(error);
-    
+                    .then(response => {
+                        console.log(response)
+                        getAlldmin()
+
+                    })
+                    .catch(error => {
+                        console.error(error);
+
+                    });
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
                 });
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success"
-              });
             }
-          });
-       
+        });
+
     }
     const clear = () => {
         setFirstName(""),
@@ -162,6 +164,11 @@ export default function AdminAction() {
     return (
         <Box>
             <Box>
+                <Box sx={{ margin: '10px' }}>
+                    <Typography sx={{ fontSize: '30px', fontWeight: 'bold', color: '#000080' }}>
+                        Admin Action
+                    </Typography>
+                </Box>
                 <Grid container spacing={2}>
                     <Grid item xs={3}>
                         <Box  >
@@ -227,7 +234,7 @@ export default function AdminAction() {
                     />
 
                     {popup &&
-                        <DialogCard open={popup} close={closePopup} updateData={updateData}  updateAdmin={()=>{updateAdmin}}/>
+                        <DialogCard open={popup} close={closebtn} updateData={updateData} />
                     }
                 </div>
             </Box>

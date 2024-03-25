@@ -14,7 +14,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function DialogCard({ open, close, updateAdmin, updateData }) {
+export default function DialogCard({ open, close, updateData}) {
 
     const [firstName, setFirstName] = useState(updateData?.firstname)
     const [lastName, setLastName] = useState(updateData?.lastname)
@@ -34,8 +34,8 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
             })
                 .then(function (response) {
                     console.log(response);
-                    updateAdmin()
-                    // Alert("success", "Admin data has been updated!")
+                    
+                 
                     Swal.fire({
                         position: "center",
                         icon: "success",
@@ -43,6 +43,7 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
                         showConfirmButton: false,
                         timer: 1500
                       });
+                      close()
                     clear()
 
                 })
@@ -123,9 +124,7 @@ export default function DialogCard({ open, close, updateAdmin, updateData }) {
                         <Box sx={{}}>
                             <MyButton name={"Save"} width={'150px'} background={"#008000"} hoverColor={"#5D6D7E "} onClick={save} />
                         </Box>
-                        <Box sx={{}}>
-                            <MyButton name={"Clear"} width={'150px'} background={"#CA6F1E "} hoverColor={"#008080"} onClick={clear} />
-                        </Box>
+                     
 
                     </Box>
 

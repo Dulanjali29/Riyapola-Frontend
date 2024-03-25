@@ -18,7 +18,7 @@ export default function Customers() {
         { field: 'address', headerName: 'Address', width: 200 },
         { field: 'contact', headerName: 'Contact', width: 150 },
         { field: 'email', headerName: 'E-Mail', width: 200 },
-        { field: 'dateTime', headerName: 'Date and Time', width: 200 },
+        { field: 'dateTime', headerName: 'Date and Time', width: 250 },
         {
             field: 'action',
             headerName: 'Action',
