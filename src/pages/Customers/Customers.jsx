@@ -113,7 +113,7 @@ export default function Customers() {
                 >
                     Customer Details
                 </Typography>
-                <div style={{ height: 400, width: '100%', paddingTop: 30 }}>
+                <div style={{ height: 800, width: '100%', paddingTop: 30 }}>
                     <DataGrid
                         rows={data}
                         columns={columns}
@@ -122,7 +122,7 @@ export default function Customers() {
                                 paginationModel: { page: 0, pageSize: 10 },
                             },
                         }}
-                        pageSizeOptions={[5, 10]}
+                        pageSizeOptions={[10, 10]}
                         checkboxSelection
                     />
 

@@ -25,21 +25,21 @@ export default function CarView() {
   const [transmissionMode, setTransmissionMode] = useState("");
   const [dailyRentalPrice, setDailyRentalPrice] = useState("");
   const [status, setStatus] = useState("");
+  const [image, setImg] = useState("");
+  const [popup, setPopup] = useState(false)
+  const [updateData, setUpdateData] = useState()
 
-  const [popup,setPopup]=useState(false)
-  const[updateData,setUpdateData]=useState()
 
-
-  const openPopup=(val)=>{
+  const openPopup = (val) => {
     setPopup(true)
     setUpdateData(val)
-}
-const closebtn=()=>{
+  }
+  const closebtn = () => {
     setPopup(false)
     getAllCars()
-}
+  }
 
-{closebtn}
+  { closebtn }
   const noOfpas = [
     { label: '1', value: '1' },
     { label: '2', value: '2' },
@@ -78,18 +78,25 @@ const closebtn=()=>{
   });
 
   const saveCar = () => {
-    instance.post('/car/carRegister', {
+    const formData = new FormData();
+    formData.append('brand', brand);
+    formData.append('model', model);
+    formData.append('noOfPassengers', passangers);
+    formData.append('fuelType', fueltype);
+    formData.append('transmissionMode', transmissionMode);
+    formData.append('dailyRentalPrice', dailyRentalPrice);
+    formData.append('status', status);
+    formData.append('image', image);
 
-      brand: brand,
-      model: model,
-      noOfPassangers: passangers,
-      fuelType: fueltype,
-      transmissionMode: transmissionMode,
-      dailyRentalPrice: dailyRentalPrice,
-      status: status,
+    instance.post('/car/carRegister', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+
     })
       .then(function (response) {
         console.log(response);
+        alert("success","car saved successfull!")
         clear()
         getAllCars();
       })
@@ -98,6 +105,10 @@ const closebtn=()=>{
 
       });
   }
+  const handleUpload = (event) => {
+    console.log(event.target.files[0]);
+    setImg(event.target.files[0])
+   };
   const clear = () => {
     setBrand("");
     setModel("");
@@ -127,7 +138,7 @@ const closebtn=()=>{
             color='info'
             aria-label="edit"
             onClick={() => {
-             openPopup(params.row)
+              openPopup(params.row)
 
             }}
           >
@@ -146,36 +157,36 @@ const closebtn=()=>{
     },
   ];
   const deleteCar = (id) => {
- 
 
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      }).then((result) => {
-        if (result.isConfirmed) {
-            instance.delete('/car/deleteCar/' + id)
 
-            .then(response => {
-                console.log(response)
-                getAllCars()
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        instance.delete('/car/deleteCar/' + id)
 
-            })
-            .catch(error => {
-                console.error(error);
+          .then(response => {
+            console.log(response)
+            getAllCars()
 
-            });
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success"
+          })
+          .catch(error => {
+            console.error(error);
+
           });
-        }
-      });
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
+      }
+    });
   }
   const getAllCars = () => {
     instance({
@@ -212,8 +223,8 @@ const closebtn=()=>{
       <Box>
 
       </Box>
-      <Box sx={{margin:'10px'}}>
-        <Typography sx={{fontSize:'30px',fontWeight:'bold',color: '#000080'}}>
+      <Box sx={{ margin: '10px' }}>
+        <Typography sx={{ fontSize: '30px', fontWeight: 'bold', color: '#000080' }}>
           Car Action
         </Typography>
       </Box>
@@ -294,10 +305,10 @@ const closebtn=()=>{
                 variant="contained"
                 tabIndex={-1}
                 startIcon={<CloudUploadIcon />}
-                sx={{marginTop:'10px'}}
+                sx={{ marginTop: '10px' }}
               >
                 Upload Image
-                <VisuallyHiddenInput type="file" />
+                <VisuallyHiddenInput type="file"  onChange={handleUpload}/>
               </Button>
             </Box>
           </Grid>
@@ -335,7 +346,7 @@ const closebtn=()=>{
           />
 
           {popup &&
-            <CarCard open={popup} close={closebtn} updateData={updateData}  />
+            <CarCard open={popup} close={closebtn} updateData={updateData} />
           }
         </div>
       </Box>
