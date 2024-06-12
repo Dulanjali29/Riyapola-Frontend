@@ -127,11 +127,12 @@ export default function AdminAction() {
 
     }
     const clear = () => {
-        setFirstName(""),
+            setFirstName(""),
             setLastName(""),
             setUserName(""),
             setpassword(""),
             setRole("");
+            
     }
     const getAlldmin = () => {
         instance({
@@ -158,9 +159,11 @@ export default function AdminAction() {
 
             });
     }
+
     useEffect(() => {
         getAlldmin(setData)
     }, []);
+    
     return (
         <Box>
             <Box>

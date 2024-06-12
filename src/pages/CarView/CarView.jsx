@@ -25,7 +25,7 @@ export default function CarView() {
   const [transmissionMode, setTransmissionMode] = useState("");
   const [dailyRentalPrice, setDailyRentalPrice] = useState("");
   const [status, setStatus] = useState("");
-  const [image, setImg] = useState("");
+  const [image, setImage] = useState("");
   const [popup, setPopup] = useState(false)
   const [updateData, setUpdateData] = useState()
 
@@ -40,15 +40,17 @@ export default function CarView() {
   }
 
   { closebtn }
+
   const noOfpas = [
-    { label: '1', value: '1' },
-    { label: '2', value: '2' },
-    { label: '3', value: '3' },
-    { label: '4', value: '4' },
-    { label: '5', value: '5' },
+    { label: '1', value:'1' },
+    { label: '2', value: '2'},
+    { label: '3', value: '3'},
+    { label: '4', value:'4' },
+    { label: '5', value: '5'},
     { label: '6', value: '6' },
     { label: '7', value: '7' },
     { label: '8', value: '8' },
+
 
   ]
   const fuelType = [
@@ -78,37 +80,56 @@ export default function CarView() {
   });
 
   const saveCar = () => {
-    const formData = new FormData();
-    formData.append('brand', brand);
-    formData.append('model', model);
-    formData.append('noOfPassengers', passangers);
-    formData.append('fuelType', fueltype);
-    formData.append('transmissionMode', transmissionMode);
-    formData.append('dailyRentalPrice', dailyRentalPrice);
-    formData.append('status', status);
-    formData.append('image', image);
-
-    instance.post('/car/carRegister', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-
+   
+      instance.post("/car/carRegister", {
+    
+      brand: brand,
+      model: model,
+      noOfPassengers: passangers,
+      fuelType: fueltype,
+      transmissionMode: transmissionMode,
+      dailyRentalPrice: dailyRentalPrice,
+      status: status
+     
     })
+
       .then(function (response) {
         console.log(response);
-        alert("success","car saved successfull!")
+        const carIdForImage = response.data.carId;
+      
+        console.log(carIdForImage);
+
+        const data = new FormData();
+        data.append('images', image);
+        data.append('carId', carIdForImage);
+
+        instance.post("/image/addImage", data, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function (response) {
+          console.log("image response" + response);
+        })
+          .catch(function (error) {
+            console.log("image error is" + error);
+          });
+
+        alert("success", "car saved successfull!")
         clear()
         getAllCars();
       })
       .catch(function (error) {
-        console.log(error);
+        console.log("Error details: ", error.response ? error.response.data : error);
 
       });
   }
+  
   const handleUpload = (event) => {
     console.log(event.target.files[0]);
-    setImg(event.target.files[0])
-   };
+    setImage(URL.createObjectURL(event.target.files[0]))
+    setImage(event.target.files[0])
+  };
+
   const clear = () => {
     setBrand("");
     setModel("");
@@ -190,34 +211,47 @@ export default function CarView() {
   }
   const getAllCars = () => {
     instance({
-      method: 'get',
-      url: '/car/getAllCar',
+        method: 'get',
+        url: '/car/getAllCar',
+       
     })
-      .then(function (response) {
+    .then(function (response) {
+        // console.log("Response data:", response.data); // Log the response to check structure
 
-        const array = [];
-        response.data.forEach(val => {
-          array.push({
-            id: val.car_id,
-            brand: val.brand,
-            model: val.model,
-            noOfpas: val.noOfPassengers,
-            fueltype: val.fuelType,
-            trMode: val.transmissionMode,
-            dailyPrice: val.dailyRentalPrice,
-            status: val.status,
+        if (Array.isArray(response.data)) {
+       
+            const array = response.data.map(val => ({
+              
+                id: val.carId,
+                brand: val.brand,
+                model: val.model,
+                noOfpas: val.noOfPassengers,
+                fueltype: val.fuelType,
+                trMode: val.transmissionMode,
+                dailyPrice: val.dailyRentalPrice,
+                status: val.status,
+                imId: val.carImgs && val.carImgs.length > 0 ? val.carImgs[0].imgId:null ,
+                image: val.carImgs && val.carImgs.length > 0 ? val.carImgs[0].images:null // Handle images array
+            }));
 
-          });
+            setData(array);
+            console.log(array);
+        } else {
+            console.error("Expected an array but got:", response.data);
+        }
+    })
+    .catch(function (error) {
+        console.error("Error fetching data:", error);
+    });
+};
 
-        });
 
-        setData(array);
 
-      });
-  }
-  useEffect(() => {
-    getAllCars(setData)
-  }, []);
+
+useEffect(() => {
+    getAllCars();
+}, []);
+
   return (
     <Box>
       <Box>
@@ -250,6 +284,7 @@ export default function CarView() {
                 value={passangers}
                 renderInput={(params) => <TextField {...params} label="Number Of Passengers" />}
                 onChange={(event, value) => setPassangers(value.value)}
+               
               />
             </Box>
           </Grid>
@@ -304,11 +339,12 @@ export default function CarView() {
                 role={undefined}
                 variant="contained"
                 tabIndex={-1}
+                onChange={handleUpload}
                 startIcon={<CloudUploadIcon />}
                 sx={{ marginTop: '10px' }}
               >
                 Upload Image
-                <VisuallyHiddenInput type="file"  onChange={handleUpload}/>
+                <VisuallyHiddenInput type="file"  />
               </Button>
             </Box>
           </Grid>
@@ -346,7 +382,7 @@ export default function CarView() {
           />
 
           {popup &&
-            <CarCard open={popup} close={closebtn} updateData={updateData} />
+            <CarCard open={popup} close={closebtn} updateData={updateData} imgId={updateData.imgId} />
           }
         </div>
       </Box>
