@@ -45,7 +45,7 @@ export default function Customers() {
     const getAllCustomers = () => {
         instance({
             method: 'get',
-            url: 'customer/getAllCustomers',
+            url: '/admin/getAllCustomers',
         })
             .then(function (response) {
 
