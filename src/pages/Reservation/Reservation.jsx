@@ -57,7 +57,35 @@ export default function Reservation() {
 
 
     
-    
+    useEffect(() => {
+        getReservations();
+    }, []);
+  
+        const getReservations = () => {
+          instance.get("/reservation/getAllReservation")
+          .then(function(response){
+            
+            const array = [];
+            response.data?.map((val) => {
+              array.push({
+                  id: val.reservationId,
+                  startDate: val.startDate,
+                  startTime: val.startTime,
+                  endDate: val.endDate,
+                  endTime: val.endTime,
+                  pickUpLocation: val.pickUpLocation,
+                  carId: val.carId,
+                  customerId: val.customerId,
+                  status: val.status,
+              })
+            })
+            setRow(array);
+            console.log("array is ",array);
+          })
+          .catch(function (error){
+            console.log("your error is",error);
+          })
+        }
     return (
         <Box sx={{ height: 400, width: '100%' }}>
             <Box sx={{ boxShadow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '12px 15px', borderBottom: '1px solid #ddd', background: "#7FB3D5", }}>
