@@ -19,7 +19,7 @@ export default function Home() {
             </Box>
             
                 <Box>
-                <Box  sx={{marginTop:"620px", marginLeft:"70px", width:"30%",opacity:"100%", position:"absolute",zIndex:"100px"}}>
+                <Box  sx={{marginTop:"600px", marginLeft:"70px", width:"30%",opacity:"100%", position:"absolute",zIndex:"100px"}}>
                     <Link to={'/login'}>
                     <MyButton name={"Admin Login"} width={'50%'} background={"#000000"} hoverColor={"#808080"}/>
                     </Link>

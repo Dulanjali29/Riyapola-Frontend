@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Autocomplete, Box, Button, Typography } from '@mui/material'
+import { Autocomplete, Box, Button, colors, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 import InputText from '../../common/InputText/InputText'
 import MyButton from '../../common/Button/MyButton'
 import CarCard from '../../component/CarCard/CarCard';
+import { red } from '@mui/material/colors';
 
 export default function CarView() {
 
@@ -28,7 +29,9 @@ export default function CarView() {
   const [image, setImage] = useState("");
   const [popup, setPopup] = useState(false)
   const [updateData, setUpdateData] = useState()
+  const [errors, setErrors] = useState({});
 
+  
 
   const openPopup = (val) => {
     setPopup(true)
@@ -78,9 +81,43 @@ export default function CarView() {
     whiteSpace: 'nowrap',
     width: 1,
   });
+  
+const validate = () => {
+  let tempErrors = {};
+  let isValid=true;
+  
+  if (!brand.trim()){
+    tempErrors.brand ="Brand is required";
+    isValid=false;
+  } 
+  if (!model.trim()){ tempErrors.model = "Model is required"};
+  if (!passangers) {tempErrors.passangers = "Passengers required"};
+  if (!fueltype) {tempErrors.fueltype = "Fuel type required"};
+  if (!transmissionMode) {tempErrors.transmissionMode = "Transmission required"};
 
-  const saveCar = () => {
-   
+  if (!dailyRentalPrice) {
+    tempErrors.dailyRentalPrice = "Price required";
+  } else if (isNaN(dailyRentalPrice)) {
+    tempErrors.dailyRentalPrice = "Must be a number";
+  }
+
+  if (!status) tempErrors.status = "Status required";
+  if (!image) tempErrors.image = "Image required";
+
+  setErrors(tempErrors);
+  return Object.keys(tempErrors).length === 0;
+};
+
+  const saveCar = () => { 
+  
+     if (!validate()) {
+    Swal.fire({
+      icon: "error",
+      title: "Validation Error",
+      text: "Please fill all required fields correctly"
+    });
+    return;
+  }else{
       instance.post("/car/carRegister", {
     
       brand: brand,
@@ -122,6 +159,7 @@ export default function CarView() {
         console.log("Error details: ", error.response ? error.response.data : error);
 
       });
+  }
   }
   
   const handleUpload = (event) => {
@@ -266,12 +304,33 @@ useEffect(() => {
         <Grid container spacing={2}>
           <Grid item xs={2}>
             <Box>
-              <InputText label={"Brand Name"} value={brand} width={"100%"} type={'text'} onChange={(val) => setBrand(val.target.value)} />
+              <InputText 
+              label={"Brand Name"} 
+              value={brand} 
+              width={"100%"}
+              type={'text'} 
+              onChange={(val) => setBrand(val.target.value)} 
+              
+              />
+           <Box >
+           <Typography sx={{ fontSize: '15px', color: '#ce1111' }}>
+             {errors.brand}
+           </Typography>
+           </Box>
+
             </Box>
           </Grid>
           <Grid item xs={2}>
             <Box>
-              <InputText label={"Model Name"} value={model} width={"100%"} type={'text'} onChange={(val) => setModel(val.target.value)} />
+              <InputText label={"Model Name"} 
+              value={model}
+               width={"100%"} type={'text'} 
+              onChange={(val) => setModel(val.target.value)} />
+              <Box >
+           <Typography sx={{ fontSize: '15px', color: '#ce1111' }}>
+             {errors.model}
+           </Typography>
+           </Box>
             </Box>
           </Grid>
           <Grid item xs={2}>

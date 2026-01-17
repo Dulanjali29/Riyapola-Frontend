@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     const key = localStorage.getItem('stmToken')
-    console.log(key);
+    console.log("token-"+key);
 
     if (key !== null) {
       setLogin(true);
