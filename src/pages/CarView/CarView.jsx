@@ -326,11 +326,13 @@ useEffect(() => {
               value={model}
                width={"100%"} type={'text'} 
               onChange={(val) => setModel(val.target.value)} />
-              <Box >
-           <Typography sx={{ fontSize: '15px', color: '#ce1111' }}>
+
+            <Box >
+            <Typography sx={{ fontSize: '15px', color: '#ce1111' }}>
              {errors.model}
-           </Typography>
-           </Box>
+            </Typography>
+            </Box>
+
             </Box>
           </Grid>
           <Grid item xs={2}>
@@ -345,6 +347,12 @@ useEffect(() => {
                 onChange={(event, value) => setPassangers(value.value)}
                
               />
+            <Box sx={{marginTop:'20px'}}>
+            <Typography sx={{ fontSize: '15px', color: '#ce1111' }}>
+             {errors.passangers}
+            </Typography>
+            </Box>
+              
             </Box>
           </Grid>
           <Grid item xs={2}>
@@ -358,6 +366,12 @@ useEffect(() => {
                 renderInput={(params) => <TextField {...params} label="Fuel Type" />}
                 onChange={(event, value) => setFuelType(value.value)}
               />
+               <Box sx={{marginTop:'20px'}}>
+            <Typography sx={{ fontSize: '15px', color: '#ce1111' }}>
+             {errors.fueltype}
+            </Typography>
+            </Box>
+
             </Box>
           </Grid>
           <Grid item xs={2}>
@@ -371,12 +385,27 @@ useEffect(() => {
                 renderInput={(params) => <TextField {...params} label="Transmission Type" />}
                 onChange={(event, value) => setTransmissionMode(value.value)}
               />
+
+               <Box sx={{marginTop:'20px'}} >
+            <Typography sx={{ fontSize: '15px', color: '#ce1111' }}>
+             {errors.transmissionMode}
+            </Typography>
+            </Box>
+
+              
             </Box>
           </Grid>
           <Grid item xs={2}>
             <Box>
-              <InputText label={"Daily Rental Price"} value={dailyRentalPrice} width={"100%"} type={'text'} onChange={(val) => setDailyRentalPrice(val.target.value)} />
+              <InputText label={"Daily Rental Price"} value={dailyRentalPrice} width={"100%"} type={'text'} 
+              onChange={(val) => setDailyRentalPrice(val.target.value)} />
+               <Box >
+            <Typography sx={{ fontSize: '15px', color: '#ce1111' }}>
+             {errors.dailyRentalPrice}
+            </Typography>
             </Box>
+            </Box>
+
           </Grid>
           <Grid item xs={2}>
             <Box>
@@ -389,6 +418,11 @@ useEffect(() => {
                 renderInput={(params) => <TextField {...params} label="Availability" />}
                 onChange={(event, value) => setStatus(value.value)}
               />
+               <Box sx={{marginTop:'20px'}} >
+            <Typography sx={{ fontSize: '15px', color: '#ce1111' }}>
+             {errors.status}
+            </Typography>
+            </Box>
             </Box>
           </Grid>
           <Grid item xs={2}>
@@ -405,6 +439,11 @@ useEffect(() => {
                 Upload Image
                 <VisuallyHiddenInput type="file"  />
               </Button>
+               <Box sx={{marginTop:'25px'}} >
+            <Typography sx={{ fontSize: '15px', color: '#ce1111' }}>
+             {errors.image}
+            </Typography>
+            </Box>
             </Box>
           </Grid>
 
