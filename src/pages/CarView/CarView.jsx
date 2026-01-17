@@ -111,11 +111,11 @@ const validate = () => {
   const saveCar = () => { 
   
      if (!validate()) {
-    Swal.fire({
-      icon: "error",
-      title: "Validation Error",
-      text: "Please fill all required fields correctly"
-    });
+  //  Swal.fire({
+  //     icon: "error",
+  //     title: "Validation Error",
+  //     text: "Please fill all required fields correctly"
+  //   });
     return;
   }else{
       instance.post("/car/carRegister", {
@@ -161,10 +161,10 @@ const validate = () => {
       });
   }
   }
-  
+  const [img,setImg]=useState();
   const handleUpload = (event) => {
     console.log(event.target.files[0]);
-    setImage(URL.createObjectURL(event.target.files[0]))
+    setImg(URL.createObjectURL(event.target.files[0]))
     setImage(event.target.files[0])
   };
 
@@ -178,6 +178,7 @@ const validate = () => {
     setStatus("");
 
   }
+  
   const columns = [
     { field: 'id', headerName: 'ID ', width: 150 },
     { field: 'brand', headerName: 'Brand ', width: 150 },
@@ -439,12 +440,20 @@ useEffect(() => {
                 Upload Image
                 <VisuallyHiddenInput type="file"  />
               </Button>
+              
+            
                <Box sx={{marginTop:'25px'}} >
             <Typography sx={{ fontSize: '15px', color: '#ce1111' }}>
              {errors.image}
             </Typography>
             </Box>
             </Box>
+          </Grid>
+          <Grid>
+              <Box sx={{marginLeft:'-30px',marginTop:'25px'}}>
+               <img src={img} width={"60%"} height={"50%"} alt="" />
+
+              </Box>
           </Grid>
 
         </Grid>
