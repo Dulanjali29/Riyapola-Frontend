@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Autocomplete, Box, Button, colors, Typography } from '@mui/material'
+import { Autocomplete, Box, Button, colors, imageListClasses, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -108,6 +108,14 @@ const validate = () => {
   return Object.keys(tempErrors).length === 0;
 };
 
+
+
+
+
+
+
+
+
   const saveCar = () => { 
   
      if (!validate()) {
@@ -161,6 +169,7 @@ const validate = () => {
       });
   }
   }
+
   const [img,setImg]=useState();
   const handleUpload = (event) => {
     console.log(event.target.files[0]);
@@ -178,7 +187,10 @@ const validate = () => {
     setStatus("");
 
   }
-  
+ 
+
+
+
   const columns = [
     { field: 'id', headerName: 'ID ', width: 150 },
     { field: 'brand', headerName: 'Brand ', width: 150 },
@@ -187,6 +199,32 @@ const validate = () => {
     { field: 'fueltype', headerName: 'Fuel Type', width: 150 },
     { field: 'trMode', headerName: 'Transmission Type', width: 200 },
     { field: 'dailyPrice', headerName: 'Daily Rental Price', width: 150 },
+
+   {field: 'imgId',
+  headerName: 'Image',
+  width: 220,
+  sortable: false,
+  renderCell: (params) => {
+    if (!params.value) {
+      return <Typography>No Image</Typography>;
+    }
+
+    return (
+      <img
+        src={`http://localhost:8080 ${params.value}`}
+        alt="car"
+        style={{
+          width: '100px',
+          height: '50px',
+          objectFit: 'cover',
+          borderRadius: '6px',
+          border: '1px solid #ccc'
+        }}
+      />
+    );
+  }
+},
+
     { field: 'status', headerName: 'Status', width: 150 },
     {
       field: 'actions',
@@ -216,8 +254,8 @@ const validate = () => {
       ),
     },
   ];
-  const deleteCar = (id) => {
 
+  const deleteCar = (id) => {
 
     Swal.fire({
       title: "Are you sure?",
@@ -269,10 +307,17 @@ const validate = () => {
                 trMode: val.transmissionMode,
                 dailyPrice: val.dailyRentalPrice,
                 status: val.status,
-                imId: val.carImgs && val.carImgs.length > 0 ? val.carImgs[0].imgId:null ,
-                image: val.carImgs && val.carImgs.length > 0 ? val.carImgs[0].images:null // Handle images array
-            }));
+                
+                // imgId: val.carImgs && val.carImgs.length > 0 ? val.carImgs[0].images:null // Handle images array
 
+                imgId:
+      val.carImgs && val.carImgs.length > 0
+      ? `data:image/jpeg;base64,${val.carImgs[0].images}`
+      : null
+             
+              
+            }));
+          
             setData(array);
             console.log(array);
         } else {
@@ -438,7 +483,7 @@ useEffect(() => {
                 sx={{ marginTop: '10px' }}
               >
                 Upload Image
-                <VisuallyHiddenInput type="file"  />
+                <VisuallyHiddenInput type="file" onChange={handleUpload}  />
               </Button>
               
             
